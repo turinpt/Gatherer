@@ -84,22 +84,19 @@ function AddHerb(herb)
     Gatherer_AddGatherHere(herb, 1, herb, 0);
 end
 
-function ShareAll()
+function ShareAll(mapContinent)
     Gatherer_ChatPrint("Gatherer: Sharing all the nodes.")
-    for mapContinent = 1,table.getn(GatherRegionData) do
-        for mapZone = 1,table.getn(GatherRegionData[mapContinent]) do
-            if (GatherItems[mapContinent][mapZone]) then
-                for gatherName, gatherData in GatherItems[mapContinent][mapZone] do
-                    for hPos, gatherInfo in gatherData do
-                        local startTimer = 0
-                        if (gatherInfo.lastpick and (time() - gatherInfo.lastpick) < 2700) then
-                            startTimer = gatherInfo.lastpick
-                        end
-                        Gatherer_BroadcastGather(gatherName, gatherInfo.gtype, mapContinent, mapZone, gatherInfo.x, gatherInfo.y, gatherName, 0, startTimer)
+    for mapZone = 1,table.getn(GatherRegionData[mapContinent]) do
+        if (GatherItems[mapContinent][mapZone]) then
+            for gatherName, gatherData in GatherItems[mapContinent][mapZone] do
+                for hPos, gatherInfo in gatherData do
+                    local startTimer = 0
+                    if (gatherInfo.lastpick and (time() - gatherInfo.lastpick) < 2700) then
+                        startTimer = gatherInfo.lastpick
                     end
+                    Gatherer_BroadcastGather(gatherName, gatherInfo.gtype, mapContinent, mapZone, gatherInfo.x, gatherInfo.y, gatherName, 0, startTimer)
                 end
             end
         end
     end
-    
 end
