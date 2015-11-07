@@ -1219,10 +1219,23 @@ local HerbSpawnTimers = {
 	gravemoss = 1800,
 	fadeleaf = 1800,
 	goldthorn = 1800,
+	bruiseweed = 1800,
+	khadgarsWhisker = 1800,
+	kingsblood = 1800,
+	liferoot = 1800,
+	wildsteelbloom = 1800,
+	wintersbite = 1800,
+	briarthorn = 900,
+	earthroot = 900,
+	mageroyal = 900,
+	peacebloom = 900,
+	silverleaf = 900,
+	stranglekelp = 900
 }
 
 function GetNodeTime(nodeName)
 	nodeName = string.lower(string.gsub(nodeName,' ',''));
+	nodeName = string.gsub(nodeName,"'","");
 	if(HerbSpawnTimers[nodeName]) then
 		return HerbSpawnTimers[nodeName];
 	else

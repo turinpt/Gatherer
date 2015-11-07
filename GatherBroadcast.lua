@@ -68,6 +68,8 @@ function Gatherer_ReceiveBroadcast(message)
 
         if (startTimer == 1) then
             Gatherer_AddGatherToBase(gather, gatherType, gatherC, gatherZ, gatherX, gatherY, gatherIcon, gatherEventType, time());
+        elseif (startTimer > 1) then
+            Gatherer_AddGatherToBase(gather, gatherType, gatherC, gatherZ, gatherX, gatherY, gatherIcon, gatherEventType, startTimer);
         else
             Gatherer_AddGatherToBase(gather, gatherType, gatherC, gatherZ, gatherX, gatherY, gatherIcon, gatherEventType);
         end
@@ -75,7 +77,7 @@ function Gatherer_ReceiveBroadcast(message)
 end
 
 function Gatherer_SendRawMessage(message)
-    SendAddonMessage(GATHERER_ADDON_MESSAGE_PREFIX, message, "RAID");
+    SendAddonMessage(GATHERER_ADDON_MESSAGE_PREFIX, message, "GUILD");
 end
 
 function AddHerb(herb)
@@ -89,7 +91,11 @@ function ShareAll()
             if (GatherItems[mapContinent][mapZone]) then
                 for gatherName, gatherData in GatherItems[mapContinent][mapZone] do
                     for hPos, gatherInfo in gatherData do
-                        Gatherer_BroadcastGather(gatherName, gatherInfo.gtype, mapContinent, mapZone, gatherInfo.x, gatherInfo.y, gatherName, 0, 0)
+                        local startTimer = 0
+                        if (gatherInfo.lastpick and (time() - gatherInfo.lastpick) < 2700) then
+                            startTimer = gatherInfo.lastpick
+                        end
+                        Gatherer_BroadcastGather(gatherName, gatherInfo.gtype, mapContinent, mapZone, gatherInfo.x, gatherInfo.y, gatherName, 0, startTimer)
                     end
                 end
             end
