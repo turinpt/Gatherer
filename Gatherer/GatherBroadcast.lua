@@ -61,12 +61,11 @@ function Gatherer_ReceiveBroadcast(message)
     local sender, gather, gatherType, gatherC, gatherZ, gatherX, gatherY, gatherIcon, gatherEventType, startTimer = Gatherer_DecodeGather(message);
 
     if sender ~= GetUnitName("player") then
-        local prettyNodeName = gather;
-        local prettyZoneName = GatherRegionData[gatherC][gatherZ].name;
-        Gatherer_ChatPrint("Gatherer: " .. sender .. " discovered a new " .. prettyNodeName .. " node in " .. prettyZoneName .. ".");
-
         if (startTimer == 1) then
             Gatherer_AddGatherToBase(gather, gatherType, gatherC, gatherZ, gatherX, gatherY, gatherIcon, gatherEventType, time());
+            local prettyNodeName = gather;
+            local prettyZoneName = GatherRegionData[gatherC][gatherZ].name;
+            Gatherer_ChatPrint("Gatherer: " .. sender .. " discovered a new " .. prettyNodeName .. " node in " .. prettyZoneName .. ".");
         elseif (startTimer > 1) then
             Gatherer_AddGatherToBase(gather, gatherType, gatherC, gatherZ, gatherX, gatherY, gatherIcon, gatherEventType, startTimer);
         else
