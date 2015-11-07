@@ -60,7 +60,6 @@ end
 function Gatherer_ReceiveBroadcast(message)
     local sender, gather, gatherType, gatherC, gatherZ, gatherX, gatherY, gatherIcon, gatherEventType, startTimer = Gatherer_DecodeGather(message);
 
-    
     if sender ~= GetUnitName("player") then
         local prettyNodeName = gather;
         local prettyZoneName = GatherRegionData[gatherC][gatherZ].name;
@@ -84,18 +83,27 @@ function AddHerb(herb)
     Gatherer_AddGatherHere(herb, 1, herb, 0);
 end
 
-function ShareAll(mapContinent)
-    Gatherer_ChatPrint("Gatherer: Sharing all the nodes.")
+function Gatherer_ShareAll()
+    for mapContinent = 1,table.getn(GatherRegionData) do
+        Gatherer_ShareContinent(mapContinent)
+    end
+end
+
+function Gatherer_ShareContinent(mapContinent)
     for mapZone = 1,table.getn(GatherRegionData[mapContinent]) do
-        if (GatherItems[mapContinent][mapZone]) then
-            for gatherName, gatherData in GatherItems[mapContinent][mapZone] do
-                for hPos, gatherInfo in gatherData do
-                    local startTimer = 0
-                    if (gatherInfo.lastpick and (time() - gatherInfo.lastpick) < 2700) then
-                        startTimer = gatherInfo.lastpick
-                    end
-                    Gatherer_BroadcastGather(gatherName, gatherInfo.gtype, mapContinent, mapZone, gatherInfo.x, gatherInfo.y, gatherName, 0, startTimer)
+        Gatherer_ShareZone(mapContinent, mapZone)
+    end
+end
+
+function Gatherer_ShareZone(mapContinent, mapZone)
+    if (GatherItems[mapContinent][mapZone]) then
+        for gatherName, gatherData in GatherItems[mapContinent][mapZone] do
+            for hPos, gatherInfo in gatherData do
+                local startTimer = 0
+                if (gatherInfo.lastpick and (time() - gatherInfo.lastpick) < 2700) then
+                    startTimer = gatherInfo.lastpick
                 end
+                Gatherer_BroadcastGather(gatherName, gatherInfo.gtype, mapContinent, mapZone, gatherInfo.x, gatherInfo.y, gatherName, 0, startTimer)
             end
         end
     end

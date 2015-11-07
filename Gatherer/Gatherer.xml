@@ -232,6 +232,43 @@
 		</Scripts>		
 	</Button>
 
+	<Button name="Gatherer_WorldMapShare" inherits="UIPanelButtonTemplate" text="Share nodes" parent="WorldMapFrame" toplevel="true">
+		<Size>
+			<AbsDimension x="100" y="25"/>
+		</Size>
+		<Anchors>
+			<Anchor point="BOTTOMLEFT" relativeTo="WorldMapPositioningGuide" relativePoint="BOTTOMLEFT">
+				<Offset>
+					<AbsDimension x="110" y="5"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Scripts>
+			<OnClick>
+				local mapContinent = GetCurrentMapContinent();
+				local mapZone = GetCurrentMapZone();
+
+				if (mapContinent == 0 and mapZone == 0) then
+					Gatherer_ChatPrint("Gatherer: Sharing ALL the nodes.")
+					Gatherer_ShareAll()
+				elseif (mapZone == 0) then
+					Gatherer_ChatPrint("Gatherer: Sharing "..GatherRegionData[mapContinent][0].name.." nodes.")
+					Gatherer_ShareContinent(mapContinent)
+				else
+					Gatherer_ChatPrint("Gatherer: Sharing "..GatherRegionData[mapContinent][mapZone].name.." nodes.")
+					Gatherer_ShareZone(mapContinent, mapZone)
+				end
+			</OnClick>
+			<OnShow>
+				if ( this:GetParent().GetEffectiveScale ) then
+					this:SetScale(this:GetParent():GetEffectiveScale() - 0.2);
+				else
+					this:SetScale(this:GetParent():GetScale() - 0.2);
+				end
+			</OnShow>
+		</Scripts>		
+	</Button>
+
 	<Frame name="Gatherer_NodesEditFrame" topLevel="true" hidden="true" parent="WorldMapFrame">
 		<Size>
 			<AbsDimension x="400" y="160"/>
