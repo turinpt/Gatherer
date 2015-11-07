@@ -248,13 +248,7 @@
 				local mapContinent = GetCurrentMapContinent();
 				local mapZone = GetCurrentMapZone();
 
-				if (mapContinent == 0 and mapZone == 0) then
-					Gatherer_ChatPrint("Gatherer: Sharing ALL the nodes.")
-					Gatherer_ShareAll()
-				elseif (mapZone == 0) then
-					Gatherer_ChatPrint("Gatherer: Sharing "..GatherRegionData[mapContinent][0].name.." nodes.")
-					Gatherer_ShareContinent(mapContinent)
-				else
+				if (mapContinent > 0 and mapZone > 0) then
 					Gatherer_ChatPrint("Gatherer: Sharing "..GatherRegionData[mapContinent][mapZone].name.." nodes.")
 					Gatherer_ShareZone(mapContinent, mapZone)
 				end
