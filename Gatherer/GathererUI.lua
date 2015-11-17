@@ -199,6 +199,10 @@ function GathererUI_InitializeOptions()
 	else
 		GathererWD_DropDownFilters:Hide();
 	end
+
+	if (not GatherConfig.showTimers ) then
+		GatherConfig.showTimers = tonumber("0");
+	end
 	
 	if ( GatherConfig.disableWMFreezeWorkaround and GatherConfig.disableWMFreezeWorkaround == true )
 	then

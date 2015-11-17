@@ -60,13 +60,11 @@ end
 function Gatherer_ReceiveBroadcast(message)
     local sender, gather, gatherType, gatherC, gatherZ, gatherX, gatherY, gatherIcon, gatherEventType, startTimer = Gatherer_DecodeGather(message);
 
-
-
     if sender ~= GetUnitName("player") then
         if (not startTimer) then
             startTimer = 0
         end
-        
+
         if (startTimer == 1) then
             Gatherer_AddGatherToBase(gather, gatherType, gatherC, gatherZ, gatherX, gatherY, gatherIcon, gatherEventType, time());
             local prettyNodeName = gather;

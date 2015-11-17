@@ -991,6 +991,37 @@
 				</Scripts>
 			</CheckButton>
 
+			<CheckButton name="GathererUI_CheckToggleTimers" inherits="OptionsCheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="GathererUI_ButtonResetHerb" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-30"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("Enable Timers");
+						this.tooltipText = "Enable Timers";
+					</OnLoad>
+					<OnClick>
+						if (this:GetChecked()) then
+							GatherConfig.showTimers = 1;
+						else
+   							GatherConfig.showTimers = 0;
+						end
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(GathererUI_DialogFrame, "ANCHOR_TOPLEFT");
+						GameTooltip:SetText(this.tooltipText);
+						GameTooltip:Show();
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</CheckButton>
+
 			<CheckButton name="GathererUI_CheckDisableWMFix" inherits="OptionsCheckButtonTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="GathererUI_CheckToggleWorldFilters" relativePoint="TOPRIGHT">

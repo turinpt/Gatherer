@@ -1156,6 +1156,13 @@ end
 
 function ShowTimer(lastPick, parent, nodeName)
 	local timer = getglobal(parent:GetName().."Timer")
+	if (GatherConfig.showTimers == 0) then
+		if (timer and timer:IsVisible()) then
+			timer:Hide();
+		end
+		return;
+	end
+
 	if (not timer) then
 		timer = CreateFrame("Frame",parent:GetName().."Timer",parent)
 		timer:SetFrameStrata("FULLSCREEN")
